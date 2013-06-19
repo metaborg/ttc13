@@ -14,7 +14,18 @@ builders
   provider : include/ttc13.ctree                                                                                            
   provider : include/ttc13-java.jar                                                                                         
                                                                                                                             
-  observer : editor-analyze                        (multifile)                                                              
+  observer : editor-analyze                        (multifile)     
+
+  builder  : "Exec Once" = exec-once-pp-builder (openeditor)    
+                                                
+  builder  : "Exec All" = exec-once-pp-builder (openeditor) (realtime) (meta) (source)                                                   
+
+  builder  : "Start" = start-pp-builder (openeditor)    
+ 
+ 
+  builder  : "Exec Once AST" = exec-once-ast-builder (openeditor) (realtime) (meta) (source)                                                   
+  builder  : "Pretty Print" = pp-program-builder (openeditor) (realtime) (source)                                                   
+
                                                                                                                             
   builder  : "Show abstract syntax"                = debug-generate-aterm (openeditor) (realtime) (meta) (source)           
   builder  : "Show deffed syntax"                  = debug-generate-deffed (openeditor) (realtime) (meta) (source)          

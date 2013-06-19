@@ -1,2 +1,55 @@
 module exec
 
+imports include/TTC13
+
+rules
+  
+  instantiate-process :
+    Program(def*) -> Program([def*, ProcessInst(Seq(Token(), p))])
+    where oncetd(?ProcessDef(_, p))
+
+strategies
+  
+  exec-one =
+    oncetd(ProcessInst(innermost(Norm); oncetd(Step); innermost(Assoc))) 
+
+rules // seq
+
+  Step :
+    Seq(Token(), Event(e)) -> Seq(Event(e), Token())
+       
+  Norm :
+    Seq(Token(), Seq(p, q)) -> Seq(Seq(Token(), p), q)
+    
+  Norm:
+    Seq(Seq(p, Token()), q) -> Seq(p, Seq(Token(), q))
+    
+  Norm :
+    Seq(p, Seq(q, Token())) -> Seq(Seq(p, q), Token())
+  
+  Assoc :
+    Seq(p, Seq(q, r)) -> Seq(Seq(p, q), r)
+     
+rules // par
+   
+  Step :
+    Seq(Token(), Par(p, q)) -> Par(Seq(Token(), p), Seq(Token(), q))
+
+  Step :
+    Par(Seq(p, Token()), Seq(q, Token())) -> Seq(Par(p, q), Token())
+
+rules // exclusive or
+  
+  Step :
+    Seq(Token(), ExclOr(p, q)) -> ExclOr(Seq(Token(), p), q)
+    
+  Step :
+    Seq(Token(), ExclOr(p, q)) -> ExclOr(p, Seq(Token(), q))
+      
+  Norm :
+    ExclOr(Seq(p, Token()), q) -> Seq(ExclOr(p, q), Token())
+ 
+  Norm :
+    ExclOr(p, Seq(q, Token())) -> Seq(ExclOr(p, q), Token())
+
+

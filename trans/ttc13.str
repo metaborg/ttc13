@@ -15,6 +15,10 @@ imports
   check
   generate
   refactor
+  exec
+  TTC13.pp.generated  
+  pp-runtime
+  include/TTC13-parenthesize
 
 rules // Analysis
   
@@ -92,6 +96,37 @@ rules // Editor services
       );
       proposals' := <map(index-uri; index-uri-name)> proposals
 
+rules // Execution
+  
+  exec-once-ast-builder:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := <exec-one> selected
+
+  exec-once-pp-builder:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"ttc13")> path;
+      result   := <exec-one; pp-program> selected
+
+  start-pp-builder:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"ttc13")> path;
+      result   := <instantiate-process; pp-program> selected
+
+
+  pp-program-builder:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"pp.ttc13")> path;
+      result   := <pp-program> ast
+                
+   pp-program =
+     !V([], <parenthesize-TTC13; prettyprint-Program>); 
+     box2text-string(|100)
+     
 rules // Debugging
   
   // Prints the abstract syntax ATerm of a selection.

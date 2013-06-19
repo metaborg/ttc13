@@ -13,4 +13,4 @@ language General properties
                   
   extensions    : ttc13
   table         : include/TTC13.tbl
-  start symbols : Start
+  start symbols : Program
