@@ -1,4 +1,8 @@
 /Users/eelcovisser/workspace3/ttc13/include/ttc13.ctree: \
+	/Users/eelcovisser/workspace3/ttc13/include/TTC13-parenthesize.str \
+	/Users/eelcovisser/workspace3/ttc13/lib/pp-runtime.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/TTC13.pp.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/exec.str \
 	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/binding-violations.generated.str \
 	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/correctness-preservation.generated.str \
 	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/namebinding-preservation.generated.str \

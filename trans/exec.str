@@ -9,7 +9,10 @@ rules
     where oncetd(?ProcessDef(_, p))
 
 strategies
-  
+
+  // exec-one =
+  //   oncetd(ProcessInst(oncetd(Step <+ Norm)))
+    
   exec-one =
     oncetd(ProcessInst(innermost(Norm); oncetd(Step); innermost(Assoc))) 
 
@@ -34,10 +37,10 @@ rules // par
    
   Step :
     Seq(Token(), Par(p, q)) -> Par(Seq(Token(), p), Seq(Token(), q))
-
+  
   Step :
     Par(Seq(p, Token()), Seq(q, Token())) -> Seq(Par(p, q), Token())
-
+    
 rules // exclusive or
   
   Step :

@@ -1,0 +1,16 @@
+process Q =
+  start;
+  a;
+  (b
+  + c);
+  d;
+  end
+
+instance
+  start;
+  a;
+  (b
+  + c);
+  d;
+  token;
+  end

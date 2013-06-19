@@ -1,34 +1,34 @@
 regular tree grammar
-  start Start
+  start Program
   productions
-    ListStarOfDefinition1 -> ListPlusOfDefinition1
-    ListStarOfDefinition1 -> <nil>()
-    ListStarOfDefinition1 -> <conc>(ListStarOfDefinition1,ListStarOfDefinition1)
-    ListPlusOfDefinition1 -> <conc>(ListStarOfDefinition1,ListPlusOfDefinition1)
-    ListPlusOfDefinition1 -> <conc>(ListPlusOfDefinition1,ListStarOfDefinition1)
-    ListPlusOfDefinition1 -> <conc>(ListPlusOfDefinition1,ListPlusOfDefinition1)
-    ListPlusOfDefinition1 -> <cons>(Definition,ListStarOfDefinition1)
-    ListStarOfStringChar1 -> <string>
-    ListPlusOfStringChar1 -> <string>
-    OptLit1               -> <string>
+    ListStarOfDefinition0 -> ListPlusOfDefinition0
+    ListStarOfDefinition0 -> <nil>()
+    ListStarOfDefinition0 -> <conc>(ListStarOfDefinition0,ListStarOfDefinition0)
+    ListPlusOfDefinition0 -> <conc>(ListStarOfDefinition0,ListPlusOfDefinition0)
+    ListPlusOfDefinition0 -> <conc>(ListPlusOfDefinition0,ListStarOfDefinition0)
+    ListPlusOfDefinition0 -> <conc>(ListPlusOfDefinition0,ListPlusOfDefinition0)
+    ListPlusOfDefinition0 -> <cons>(Definition,ListStarOfDefinition0)
+    ListStarOfStringChar0 -> <string>
+    ListPlusOfStringChar0 -> <string>
+    OptLit0               -> <string>
+    Process               -> COMPLETION-Process(CONTENTCOMPLETE)
+    Definition            -> COMPLETION-Definition(CONTENTCOMPLETE)
     Process               -> Par(Process,Process)
-    Process               -> Seq(Process,Process)
     Process               -> ExclOr(Process,Process)
-    Process               -> InclOr(Process,Process)
+    Process               -> Seq(Process,Process)
     Process               -> Token()
     Process               -> Event
     Definition            -> ProcessInst(Process)
     Definition            -> ProcessDef(ID,Process)
-    Definition            -> EventDef(ID)
-    EventOp               -> Start()
+    ID                    -> COMPLETION-ID(CONTENTCOMPLETE)
+    EventOp               -> COMPLETION-EventOp(CONTENTCOMPLETE)
+    Event                 -> COMPLETION-Event(CONTENTCOMPLETE)
     EventOp               -> End()
-    EventOp               -> Catch()
-    EventOp               -> Throw()
-    Event                 -> EventCall(EventOp,ID)
-    Event                 -> EventOp
-    Event                 -> Event(ID)
-    Program               -> Program(ListStarOfDefinition1)
-    Start                 -> Program
+    EventOp               -> Start()
+    EventOp               -> Base(ID)
+    Event                 -> Event(EventOp)
+    Program               -> COMPLETION-Program(CONTENTCOMPLETE)
+    Program               -> Program(ListStarOfDefinition0)
     EOF                   -> <string>
     CommentChar           -> <string>
     BackSlashChar         -> <string>

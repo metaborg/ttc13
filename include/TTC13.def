@@ -1,4 +1,51 @@
 definition
+module TTC13generated
+exports
+  context-free start-symbols
+    Program
+
+  context-free syntax
+    Definition* -> Program {cons("Program")}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Program {cons("COMPLETION-Program")}
+
+  context-free syntax
+    EventOp -> Event   {cons("Event")}
+    ID      -> EventOp {cons("Base")}
+    "start" -> EventOp {cons("Start")}
+    "end"   -> EventOp {cons("End")}
+    "end"   -> ID      {reject}
+    "start" -> ID      {reject}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Event   {cons("COMPLETION-Event")}
+    CONTENTCOMPLETE -> EventOp {cons("COMPLETION-EventOp")}
+    CONTENTCOMPLETE -> ID      {cons("COMPLETION-ID")}
+
+  context-free syntax
+    "process" ID "=" Process -> Definition {cons("ProcessDef")}
+    "instance" Process       -> Definition {cons("ProcessInst")}
+    Event                    -> Process    
+    "(" Process ")"          -> Process    {bracket}
+    "token"                  -> Process    {cons("Token")}
+    "token"                  -> ID         {reject}
+    Process ";" Process      -> Process    {cons("Seq"), assoc}
+    Process "+" Process      -> Process    {cons("ExclOr"), assoc}
+    Process "||" Process     -> Process    {cons("Par"), assoc}
+    "process"                -> ID         {reject}
+    "instance"               -> ID         {reject}
+
+  context-free syntax
+    CONTENTCOMPLETE -> Definition {cons("COMPLETION-Definition")}
+    CONTENTCOMPLETE -> Process    {cons("COMPLETION-Process")}
+    CONTENTCOMPLETE -> ID         {cons("COMPLETION-ID")}
+
+  context-free priorities
+    Process ";" Process -> Process >
+    Process "+" Process -> Process >
+    Process "||" Process -> Process
+
 module Common
 
 exports
@@ -48,56 +95,57 @@ exports
 
 module TTC13
 
-imports Common
+imports Common TTC13generated
 
-exports
-
-  context-free start-symbols Start
-
-  context-free syntax
-  
-    Program -> Start
-
-  context-free syntax
-    
-    Definition* -> Program {cons("Program")}
-    
-  context-free syntax
-        
-    ID                 -> Event {cons("Event")}  
-    EventOp            -> Event      
-    EventOp "[" ID "]" -> Event {cons("EventCall")}
-    
-    "throw"            -> EventOp {cons("Throw")}
-    "catch"            -> EventOp {cons("Catch")}
-    "end"              -> EventOp {cons("End")}
-    "start"            -> EventOp {cons("Start")}
-            
-    "event" ID         -> Definition {cons("EventDef")}
-    
-    "throw"  -> ID {reject}
-    "catch"  -> ID {reject} 
-    "end"    -> ID {reject} 
-    "start"  -> ID {reject}
-    
-  context-free syntax
-    
-    "process" ID "=" Process -> Definition {cons("ProcessDef")}
-    
-    
-    "instance" Process -> Definition {cons("ProcessInst")}
-  
-    Event              -> Process
-    "(" Process ")"    -> Process {bracket}
-    
-    "token"              -> Process {cons("Token")}
-    "token"              -> ID {reject}
-      
-  context-free priorities
-    
-    Process ";" Process -> Process {cons("Seq"), assoc}    
-    > {non-assoc:
-       Process "+" Process -> Process {cons("InclOr"), assoc}
-       Process "X" Process -> Process {cons("ExclOr"), assoc}
-      }
-    > Process "||" Process -> Process {cons("Par"), assoc}
+%% exports
+%% 
+%%   context-free start-symbols Start
+%% 
+%%   context-free syntax
+%%   
+%%     Program -> Start
+%% 
+%%   context-free syntax
+%%     
+%%     Definition* -> Program {"Program"}
+%%     
+%%   context-free syntax
+%%         
+%%     ID                 -> Event {"Event"}  
+%%     EventOp            -> Event {"Event"}
+%%     EventOp "[" ID "]" -> Event {"EventCall"}
+%%     
+%%     "throw"            -> EventOp {"Throw"}
+%%     "catch"            -> EventOp {"Catch"}
+%%     "end"              -> EventOp {"End"}
+%%     "start"            -> EventOp {"Start"}
+%%             
+%%     "event" ID         -> Definition {"EventDef"}
+%%     
+%%     "throw"  -> ID {reject}
+%%     "catch"  -> ID {reject} 
+%%     "end"    -> ID {reject} 
+%%     "start"  -> ID {reject}
+%%     
+%%   context-free syntax
+%%     
+%%     "process" ID "=" Process -> Definition {"ProcessDef"}
+%%     
+%%     
+%%     "instance" Process -> Definition {"ProcessInst"}
+%%   
+%%     Event              -> Process
+%%     "(" Process ")"    -> Process {bracket}
+%%     
+%%     "token"              -> Process {"Token"}
+%%     "token"              -> ID {reject}
+%%       
+%%   context-free priorities
+%%     
+%%     Process ";" Process -> Process {"Seq", assoc}    
+%%     > {non-assoc:
+%%        Process "+" Process -> Process {"InclOr", assoc}
+%%        Process "X" Process -> Process {"ExclOr", assoc}
+%%       }
+%%     > Process "||" Process -> Process {"Par", assoc}
+%%     

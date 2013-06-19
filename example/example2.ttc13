@@ -1,0 +1,16 @@
+process P =
+  a;
+  (b;
+  c
+  || d;
+  e);
+  f
+
+instance
+  a;
+  (b;
+  c
+  || d;
+  e);
+  f;
+  token

@@ -3,23 +3,17 @@ module TTC13
 signature
   constructors
     Par         : Process * Process -> Process
-    Seq         : Process * Process -> Process
     ExclOr      : Process * Process -> Process
-    InclOr      : Process * Process -> Process
+    Seq         : Process * Process -> Process
     Token       : Process
                 : Event -> Process
     ProcessInst : Process -> Definition
     ProcessDef  : ID * Process -> Definition
-    EventDef    : ID -> Definition
-    Start       : EventOp
     End         : EventOp
-    Catch       : EventOp
-    Throw       : EventOp
-    EventCall   : EventOp * ID -> Event
-                : EventOp -> Event
-    Event       : ID -> Event
+    Start       : EventOp
+    Base        : ID -> EventOp
+    Event       : EventOp -> Event
     Program     : List(Definition) -> Program
-                : Program -> Start
                 : String -> ID
 
 
