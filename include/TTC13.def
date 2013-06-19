@@ -1,0 +1,103 @@
+definition
+module Common
+
+exports
+
+  lexical syntax
+  
+    [a-zA-Z][a-zA-Z0-9]* -> ID
+    "-"? [0-9]+          -> INT
+    
+    "\"" StringChar* "\"" -> STRING
+    ~[\"\n]               -> StringChar
+    "\\\""                -> StringChar
+    BackSlashChar         -> StringChar
+    "\\"                  -> BackSlashChar
+    
+    [\ \t\n\r] -> LAYOUT
+    
+    [\*]                             -> CommentChar
+    "/*" (~[\*] | CommentChar)* "*/" -> LAYOUT
+    "//" ~[\n\r]* ([\n\r] | EOF)     -> LAYOUT
+    
+    -> EOF
+  
+  lexical restrictions
+  
+    %% Ensure greedy matching for lexicals
+  
+    CommentChar   -/- [\/]
+    INT           -/- [0-9]
+    ID            -/- [a-zA-Z0-9\_]
+    
+    %% EOF may not be followed by any char
+    
+    EOF           -/- ~[]
+
+    %% Backslash chars in strings may not be followed by " 
+    
+    BackSlashChar -/- [\"]
+
+  context-free restrictions
+  
+    %% Ensure greedy matching for comments
+
+    LAYOUT? -/- [\ \t\n\r]
+    LAYOUT? -/- [\/].[\/]
+    LAYOUT? -/- [\/].[\*]
+
+module TTC13
+
+imports Common
+
+exports
+
+  context-free start-symbols Start
+
+  context-free syntax
+  
+    Program -> Start
+
+  context-free syntax
+    
+    Definition* -> Program {cons("Program")}
+    
+  context-free syntax
+        
+    ID                 -> Event {cons("Event")}  
+    EventOp            -> Event      
+    EventOp "[" ID "]" -> Event {cons("EventCall")}
+    
+    "throw"            -> EventOp {cons("Throw")}
+    "catch"            -> EventOp {cons("Catch")}
+    "end"              -> EventOp {cons("End")}
+    "start"            -> EventOp {cons("Start")}
+            
+    "event" ID         -> Definition {cons("EventDef")}
+    
+    "throw"  -> ID {reject}
+    "catch"  -> ID {reject} 
+    "end"    -> ID {reject} 
+    "start"  -> ID {reject}
+    
+  context-free syntax
+    
+    "process" ID "=" Process -> Definition {cons("ProcessDef")}
+    
+    
+    "instance" Process -> Definition {cons("ProcessInst")}
+  
+    Event              -> Process
+    "(" Process ")"    -> Process {bracket}
+    
+    "token"              -> Process {cons("Token")}
+    "token"              -> ID {reject}
+      
+  context-free priorities
+    
+    Process ";" Process -> Process {cons("Seq"), assoc}    
+    > {non-assoc:
+       Process "+" Process -> Process {cons("InclOr"), assoc}
+       Process "X" Process -> Process {cons("ExclOr"), assoc}
+      }
+    > Process "||" Process -> Process {cons("Par"), assoc}

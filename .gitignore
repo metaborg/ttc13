@@ -1,0 +1,9 @@
+bin
+.cache
+editor/java/trans
+editor/TTC13-*.generated.esv
+syntax/TTC13*.generated.esv
+.settings/org.eclipse.jdt.core.prefs
+utils
+lib/*.generated.str
+lib-refactoring/*.generated.str

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?eclipse version="3.0"?>
+
+<plugin>
+       <extension point="org.eclipse.imp.runtime.languageDescription">
+          <language extensions="ttc13" description="TTC13" language="TTC13" derivedFrom="DynamicRoot" validator="ttc13.TTC13Validator" validatorClass="ttc13.TTC13Validator"></language>
+       </extension>
+       <extension id="ttc13.parser" name="TTC13 Parser" point="org.eclipse.imp.runtime.parser">
+          <parser class="ttc13.TTC13ParseController" language="TTC13">
+          </parser>
+       </extension>    
+    </plugin>

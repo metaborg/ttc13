@@ -1,0 +1,6 @@
+module refactor
+
+imports
+  lib-refactoring/behavior-preservation.generated
+
+rules // Definitions of refactorings. Referenced from Minimal-Refactorings.esv

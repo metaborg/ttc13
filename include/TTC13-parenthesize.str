@@ -1,0 +1,67 @@
+module include/TTC13-parenthesize
+
+imports
+  libstratego-lib
+  include/TTC13
+
+
+strategies
+  io-TTC13-parenthesize =
+    io-wrap(parenthesize-TTC13)
+
+  parenthesize-TTC13 =
+    innermost(TTC13Parenthesize)
+
+
+rules
+
+  TTC13Parenthesize :
+    Seq(t_0, t_1) -> Seq(Parenthetical(t_0), t_1)
+    where <(?Par(_, _)
+            + ?ExclOr(_, _)
+            + ?InclOr(_, _)
+            + fail)> t_0
+
+  TTC13Parenthesize :
+    Seq(t_0, t_1) -> Seq(t_0, Parenthetical(t_1))
+    where <(?Par(_, _)
+            + ?ExclOr(_, _)
+            + ?InclOr(_, _)
+            + ?Seq(_, _)
+            + fail)> t_1
+
+  TTC13Parenthesize :
+    ExclOr(t_0, t_1) -> ExclOr(Parenthetical(t_0), t_1)
+    where <(?Par(_, _)
+            + ?InclOr(_, _)
+            + fail)> t_0
+
+  TTC13Parenthesize :
+    ExclOr(t_0, t_1) -> ExclOr(t_0, Parenthetical(t_1))
+    where <(?Par(_, _)
+            + ?ExclOr(_, _)
+            + ?InclOr(_, _)
+            + fail)> t_1
+
+  TTC13Parenthesize :
+    InclOr(t_0, t_1) -> InclOr(Parenthetical(t_0), t_1)
+    where <(?Par(_, _)
+            + ?ExclOr(_, _)
+            + fail)> t_0
+
+  TTC13Parenthesize :
+    InclOr(t_0, t_1) -> InclOr(t_0, Parenthetical(t_1))
+    where <(?Par(_, _)
+            + ?InclOr(_, _)
+            + ?ExclOr(_, _)
+            + fail)> t_1
+
+  TTC13Parenthesize :
+    Par(t_0, t_1) -> Par(t_0, Parenthetical(t_1))
+    where <(?Par(_, _) + fail)> t_1
+
+
+signature
+  constructors
+    Parenthetical : Unknown -> Unknown
+

@@ -1,0 +1,30 @@
+
+event read
+event specifyRules
+event implementExample
+event runExample
+
+process Challenge = 
+  start; 
+  read;
+  (specifyRules || implementExample); 
+  runExample; 
+  end
+  
+instance 
+  token; token; start; 
+  read; 
+  (
+  token;specifyRules || 
+  token;implementExample); 
+  runExample; 
+  end
+  
+instance 
+  token; token; start; 
+  read; 
+  (
+  token;specifyRules || 
+  token;implementExample); 
+  runExample; 
+  end

@@ -1,0 +1,50 @@
+Program(
+  [ EventDef("read")
+  , EventDef("specifyRules")
+  , EventDef("implementExample")
+  , EventDef("runExample")
+  , ProcessDef(
+      "Challenge"
+    , Seq(
+        Seq(
+          Seq(
+            Seq(Start(), Event("read"))
+          , Par(Event("specifyRules"), Event("implementExample"))
+          )
+        , Event("runExample")
+        )
+      , End()
+      )
+    )
+  , ProcessInst(
+      Seq(
+        Seq(
+          Seq(
+            Seq(Seq(Seq(Token(), Token()), Start()), Event("read"))
+          , Par(
+              Seq(Token(), Event("specifyRules"))
+            , Seq(Token(), Event("implementExample"))
+            )
+          )
+        , Event("runExample")
+        )
+      , End()
+      )
+    )
+  , ProcessInst(
+      Seq(
+        Seq(
+          Seq(
+            Seq(Seq(Seq(Token(), Token()), Start()), Event("read"))
+          , Par(
+              Seq(Token(), Event("specifyRules"))
+            , Seq(Token(), Event("implementExample"))
+            )
+          )
+        , Event("runExample")
+        )
+      , End()
+      )
+    )
+  ]
+)

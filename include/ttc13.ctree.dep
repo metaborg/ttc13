@@ -1,0 +1,19 @@
+/Users/eelcovisser/workspace3/ttc13/include/ttc13.ctree: \
+	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/binding-violations.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/correctness-preservation.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/namebinding-preservation.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/analysis-multifile.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib-refactoring/behavior-preservation.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/refactor.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/generate.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/check.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/names.str \
+	/Users/eelcovisser/workspace3/ttc13/lib/nbl-library.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib/compilation-library.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib/analysis-library-internal.generated.str \
+	 \
+	/Users/eelcovisser/workspace3/ttc13/lib/analysis-library.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib/index-library.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/lib/editor-common.generated.str \
+	/Users/eelcovisser/workspace3/ttc13/include/TTC13.str \
+	/Users/eelcovisser/workspace3/ttc13/trans/ttc13.str

@@ -1,0 +1,16 @@
+module TTC13.main
+
+imports TTC13-Builders TTC13-Refactorings TTC13-Colorer TTC13-Completions TTC13-Folding TTC13-Outliner TTC13-References TTC13-Syntax
+
+language General properties
+                  
+  name          : TTC13
+  id            : ttc13
+  extends       : Root
+                  
+  description   : "Spoofax/IMP-generated editor for the TTC13 language"
+  url           : http://strategoxt.org
+                  
+  extensions    : ttc13
+  table         : include/TTC13.tbl
+  start symbols : Start
