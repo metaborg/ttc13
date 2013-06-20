@@ -1,0 +1,57 @@
+context-free start-symbols Program
+
+templates
+  
+  Program.Program = <<Definition*; separator="\n\n">>
+    
+templates  // events
+          
+  Event.Event = <<EventOp>>
+  
+  EventOp.Base  = <<ID>>
+  EventOp.Start = <start>
+  EventOp.End   = <end>
+  
+  ID = <end> {reject}
+  ID = <start> {reject}  
+       
+templates // processes
+
+  Definition.ProcessDef = <
+    process <ID> = 
+      <Process>
+  >
+    
+  Definition.ProcessInst = <
+    instance 
+      <Process>
+  >
+  
+  Process = <<Event>>  
+  Process = <(<Process>)> {bracket}  
+  Process.Token = <token>
+  ID = <token> {reject}
+  
+  Process.Seq = <
+    <Process>;
+    <Process>
+  > {assoc}
+  
+  Process.ExclOr = <
+    <Process>
+    + <Process>
+  > {assoc}
+  
+  Process.Par = <
+    <Process>
+    || <Process>
+  > {assoc}
+  
+  ID = <process> {reject}
+  ID = <instance> {reject}
+  
+context-free priorities
+    
+  Process.Seq > Process.ExclOr > Process.Par
+
+    
